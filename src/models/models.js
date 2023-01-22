@@ -31,10 +31,15 @@ const Seat = db.define("seat", {
 })
 
 const UserRentSeat = db.define("user_film", {
-    user_id: { type: DataTypes.INTEGER, primaryKey: true },
-    rent_film_id: { type: DataTypes.INTEGER, primaryKey: true },
-    seat_id: { type: DataTypes.INTEGER, primaryKey: true }
+    user_rent_seat_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER },
+    rent_film_id: { type: DataTypes.INTEGER },
+    seat_id: { type: DataTypes.INTEGER }
 })
+
+Film.hasMany(UserRentSeat, { foreignKey: "rent_film_id" })
+
+UserRentSeat.belongsTo(Film, { foreignKey: "rent_film_id" })
 
 module.exports = {
     User,

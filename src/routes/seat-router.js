@@ -5,6 +5,9 @@ const Router = require("express").Router
 const router = Router()
 
 router.post("/seat", protectedMiddleware, seatController.createSeat)
-// router.post("/:film_id/rent-seat/:seat_id", authMiddleware, )
+router.post("/films/:rent_film_id/reserve-seats/:seat_id", authMiddleware, seatController.reserveSeat)
+router.delete("/films/:rent_film_id/reserve-seats/:seat_id", authMiddleware, seatController.unReseveSeat)
+router.get("/films/:rent_film_id/reserve-seats", authMiddleware, seatController.getFilmReserveSeats)
+router.get("/user-films/reserve-seats", authMiddleware, seatController.getUserReserveSeats)
 
 module.exports = router

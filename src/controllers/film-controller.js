@@ -32,6 +32,7 @@ class FilmController {
 
             return res.json({ message: "Фильм был успешно добавлен", data: newFilm })
         } catch (error) {
+            console.log(error);
             return res.status(400).json({ message: "Что то пошло не так" })
         }
     }
@@ -90,7 +91,7 @@ class FilmController {
 
         try {
 
-            await Film.update({
+            const udpatedFilm = await Film.update({
                 name,
                 year,
                 descr,
@@ -103,16 +104,11 @@ class FilmController {
             }, {
                 where: {
                     rent_film_id: id
-                }
+                },
+                returning: true
             })
 
-            const udpatedFilm = await Film.findOne({
-                where: {
-                    rent_film_id: id
-                }
-            })
-
-            return res.json({ message: "Фильм был успешно обновлён", data: udpatedFilm })
+            return res.json({ message: "Фильм был успешно обновлён", data: udpatedFilm[1][0].dataValues })
         } catch (error) {
             return res.status(400).json({ message: "Что то пошло не так" })
         }

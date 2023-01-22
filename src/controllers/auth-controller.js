@@ -35,17 +35,18 @@ class AuthController {
                 name, email, password: hashedPassword
             })
 
-            newUser.save()
+            await newUser.save()
 
             return res.json({
                 message: "Пользователь был успешно создан", user: {
-                    user_id: user.user_id,
+                    user_id: newUser.user_id,
                     name,
                     email
                 }
             })
 
         } catch (error) {
+            console.log(error);
             return res.status(400).json({ message: "Что то пошло не так" })
         }
     }
