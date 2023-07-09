@@ -53,6 +53,7 @@ class AuthController {
     async login(req, res) {
 
         const { email, password } = req.body
+        const data = req.body
 
         try {
 
@@ -75,7 +76,9 @@ class AuthController {
             const token = jwt.sign({ user_id: user.user_id, role: user.role }, process.env.SECRET_TOKEN, { expiresIn: "24h" })
 
             return res.json({
-                message: "Авторизация прошла успешно", token, user: {
+                message: "Авторизация прошла успешно",
+                token,
+                user: {
                     user_id: user.user_id,
                     name: user.name,
                     email
